@@ -4,7 +4,7 @@ import javax.faces.bean.SessionScoped;
 /**
  * Created by dani on 2016-11-18.
  */
-@ManagedBean(name="beanTest", eager = true)
+@ManagedBean(name="userbean", eager = true)
 @SessionScoped
 public class UserBean {
 
@@ -25,5 +25,9 @@ public class UserBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMessage(){
+        return "hello";
     }
 }
