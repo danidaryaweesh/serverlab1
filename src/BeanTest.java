@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 
 /**
  * Created by dani on 2016-11-18.
+ * jhjhjhj
  */
 @ManagedBean(name="beanTest", eager = true)
 @SessionScoped
