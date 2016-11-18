@@ -3,6 +3,7 @@ import javax.faces.bean.SessionScoped;
 
 /**
  * Created by dani on 2016-11-18.
+ * whoo
  */
 @ManagedBean(name="userbean", eager = true)
 @SessionScoped
