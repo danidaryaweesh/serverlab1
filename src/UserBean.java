@@ -1,3 +1,5 @@
+import controller.UserController;
+import model.User;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -8,9 +10,36 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="userbean", eager = true)
 @SessionScoped
 public class UserBean {
-
+    private UserController userController;
     private String username;
     private String password;
+    private int age;
+    private String address;
+    private String workTitle;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWorkTitle() {
+        return workTitle;
+    }
+
+    public void setWorkTitle(String workTitle) {
+        this.workTitle = workTitle;
+    }
 
     public String getUsername() {
         return username;
@@ -30,5 +59,24 @@ public class UserBean {
 
     public String getMessage(){
         return "hello";
+    }
+
+    public void doLogin(){
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        userController = new UserController();
+        userController.login(user);
+    }
+
+    public void doRegister(){
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setAge(age);
+        user.setAddress(address);
+        user.setWorkTitle(workTitle);
+        userController = new UserController();
+        userController.register(user);
     }
 }
