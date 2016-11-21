@@ -15,10 +15,11 @@ public class UserController {
         userService = new UserServiceImpl();
     }//userController
 
-    public UserDao login(User user){
+    public User login(User user){
         user = userService.login(user);
         if(user != null)
-            return createDao(user);
+            return user;
+            //return createDao(user);
         else
             return null;
     }//login

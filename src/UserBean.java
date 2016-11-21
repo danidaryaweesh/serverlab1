@@ -1,7 +1,12 @@
+import DAO.UserDao;
+import controller.LogController;
 import controller.UserController;
+import model.Log;
 import model.User;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by dani on 2016-11-18.
@@ -10,12 +15,14 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="userbean", eager = true)
 @SessionScoped
 public class UserBean {
-    private UserController userController;
+    private UserController userController = new UserController();
     private String username;
     private String password;
     private int age;
     private String address;
     private String workTitle;
+    private UserDao userDao;
+    private User user;
 
     public int getAge() {
         return age;
@@ -61,19 +68,23 @@ public class UserBean {
         return "hello";
     }
 
-    public void doLogin(){
-        userController = new UserController();
-        User user = new User();
-       // user.setUsername(username);
-       // user.setPassword(password);
-        user.setUsername("dani");
-        user.setPassword("1234");
-        // userController = new UserController();
-        userController.login(user);
+    public String doLogin(){
+        User tmp = new User();
+        tmp.setUsername(username);
+        tmp.setPassword(password);
+        user = userController.login(tmp);
+        if(user != null){
+            setAge(user.getAge());
+            setAddress(user.getAddress());
+            setWorkTitle(user.getWorkTitle());
+            return "index.xhtml";
+        }
+        else
+            return null;
     }
 
     public void doRegister(){
-        User user = new User();
+        user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setAge(age);
@@ -81,4 +92,65 @@ public class UserBean {
         user.setWorkTitle(workTitle);
         userController.register(user);
     }
-}
+
+    public String backToLogin(){
+        return "login.xhtml";
+    }
+
+    public String backToRegister(){
+        return "register.xhtml";
+    }
+
+
+
+
+
+
+
+
+    private LogController logController = new LogController();
+    private String title;
+    private String content;
+    private Calendar date = Calendar.getInstance();
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Calendar getDate() {
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
+
+    public void addLog(){
+        if(title != null && content != null){
+            Log log = new Log();
+            log.setOwner(user);
+            System.out.println("the index username is: " + user.getUsername());
+            log.setTitle(title);
+            log.setContent(content);
+            log.setDate(Calendar.getInstance());
+            logController.addLog(log);
+        }//if
+    }//addLog
+
+    public String getLogs(){
+        List<Log> logList = user.getLog();
+        return logList.toString();
+    }
+}//class

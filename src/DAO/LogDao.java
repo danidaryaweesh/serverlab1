@@ -10,6 +10,7 @@ public class LogDao {
     private UserDao owner;
     private String title;
     private String content;
+    private Calendar date;
 
     public int getId() {
         return id;
@@ -50,6 +51,4 @@ public class LogDao {
     public void setDate(Calendar date) {
         this.date = date;
     }
-
-    private Calendar date;
 }
