@@ -35,7 +35,7 @@
       <column id="14" parent="7" name="owner_id">
         <data-type>int(11)|0</data-type>
       </column>
-      <index id="15" parent="7" name="FK_1b9c022a0fb4478d80c2c714438">
+      <index id="15" parent="7" name="FK_9fade56ba32e4eb6a3cde140e39">
         <columns>owner_id</columns>
         <desc-columns></desc-columns>
       </index>
@@ -43,7 +43,7 @@
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="17" parent="7" name="FK_1b9c022a0fb4478d80c2c714438">
+      <foreign-key id="17" parent="7" name="FK_9fade56ba32e4eb6a3cde140e39">
         <columns>owner_id</columns>
         <ref-key>~.user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
@@ -66,25 +66,25 @@
       <column id="22" parent="8" name="sender_id">
         <data-type>int(11)|0</data-type>
       </column>
-      <index id="23" parent="8" name="FK_ba0b1d7774904894be6b3ba7a20">
-        <columns>reciever_id</columns>
+      <index id="23" parent="8" name="FK_3b9789b65ad349af9188dcbb01d">
+        <columns>sender_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="24" parent="8" name="FK_bd0daa215b654a05bdec89e70d4">
-        <columns>sender_id</columns>
+      <index id="24" parent="8" name="FK_5c391c0aee234ba592ca022ee2c">
+        <columns>reciever_id</columns>
         <desc-columns></desc-columns>
       </index>
       <key id="25" parent="8" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="26" parent="8" name="FK_ba0b1d7774904894be6b3ba7a20">
+      <foreign-key id="26" parent="8" name="FK_5c391c0aee234ba592ca022ee2c">
         <columns>reciever_id</columns>
         <ref-key>~.user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="27" parent="8" name="FK_bd0daa215b654a05bdec89e70d4">
+      <foreign-key id="27" parent="8" name="FK_3b9789b65ad349af9188dcbb01d">
         <columns>sender_id</columns>
         <ref-key>~.user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
@@ -112,7 +112,7 @@
       <column id="33" parent="9" name="workTitle">
         <data-type>varchar(255)|0</data-type>
       </column>
-      <index id="34" parent="9" name="UK_bcb23b6523bb4e9a9ce9eb8bb97">
+      <index id="34" parent="9" name="UK_d6b8e531debe4be6ae3ab6a2356">
         <columns>username</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -121,9 +121,9 @@
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="36" parent="9" name="UK_bcb23b6523bb4e9a9ce9eb8bb97">
+      <key id="36" parent="9" name="UK_d6b8e531debe4be6ae3ab6a2356">
         <columns>username</columns>
-        <underlying-index>UK_bcb23b6523bb4e9a9ce9eb8bb97</underlying-index>
+        <underlying-index>UK_d6b8e531debe4be6ae3ab6a2356</underlying-index>
       </key>
     </database-model>
   </data-source>

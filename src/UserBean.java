@@ -62,10 +62,13 @@ public class UserBean {
     }
 
     public void doLogin(){
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
         userController = new UserController();
+        User user = new User();
+       // user.setUsername(username);
+       // user.setPassword(password);
+        user.setUsername("dani");
+        user.setPassword("1234");
+        // userController = new UserController();
         userController.login(user);
     }
 
@@ -76,7 +79,6 @@ public class UserBean {
         user.setAge(age);
         user.setAddress(address);
         user.setWorkTitle(workTitle);
-        userController = new UserController();
         userController.register(user);
     }
 }

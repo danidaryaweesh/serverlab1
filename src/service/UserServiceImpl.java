@@ -1,9 +1,9 @@
 package service;
 
 import model.User;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Alican on 2016-11-21.
@@ -18,17 +18,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User login(User user){
-        User qUser = em.find(user.getClass(), user.getUsername());
-        if(qUser != null){
-            //User exists, check if password matches
-            if(user.getPassword().equals(qUser.getPassword())){
-                //Password is correct, login successful
-                return qUser;
-            }//if
-            else{
-                //Password is wrong, login failed
-                return null;
-            }//else
+        User returnedUser = new User();
+        List<User> userList = getUser(user);
+
+        if(!userList.isEmpty() && userList.size() < 2){
+            returnedUser = userList.get(0);
+            System.out.println("The username is: "+returnedUser.getUsername());
+            return returnedUser;
         }//if
         else{
             //user does not exist, login failed
@@ -38,15 +34,30 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User register(User user) {
-        User qUser = em.find(user.getClass(), user.getUsername());
-        if(qUser == null){
-            //User does not exist, register user
-            //create lists of message and log
-            return qUser;
+        List<User> userList = getUser(user);
+
+        if(!userList.isEmpty() && userList.size() < 2){
+            System.out.println(userList.get(0).getUsername());
+            return userList.get(0);
         }//if
         else{
-            //user exist, register failed
+            //user does not exist, login failed
+            em.getTransaction().begin();
+            em.setFlushMode(FlushModeType.COMMIT);
+            em.persist(user);
+            em.getTransaction().commit();
+            System.out.println("Registred new user!");
             return null;
         }//else
     }//register
+
+    private List<User> getUser(User user){
+        List<User> userList;
+        Query q = em.createQuery("SELECT user FROM User user WHERE user.username=?1 AND user.password=?2");
+        q.setParameter(1, user.getUsername());
+        q.setParameter(2, user.getPassword());
+        userList = q.getResultList();
+        System.out.println("****Length of the list is: "+userList.size());
+        return userList;
+    }
 }//class
