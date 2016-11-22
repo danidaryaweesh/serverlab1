@@ -19,7 +19,7 @@
 
         Password:
         <h:inputSecret id="out" value="#{userbean.password}"/><br/>
-        <h:commandButton id="loginknapp" value="Login" action="#{userbean.doLogin()}"/>
+        <h:commandButton id="loginknapp" value="Login" action="#{userbean.goConnect()}"/>
         <h:commandButton id="registerknapp" value="Register" action="#{userbean.backToRegister()}"/>
     </h:form>
 </h:body>

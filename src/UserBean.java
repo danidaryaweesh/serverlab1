@@ -90,8 +90,8 @@ public class UserBean {
 
     public void goConnect(){
         Client client = Client.create();
-        WebResource webResource= client.resource("http://localhost:8080/hello/get");
-        ClientResponse response = webResource.accept("application/json")
+        WebResource webResource= client.resource("http://130.229.136.250:8080/rest/hello/");
+        ClientResponse response = webResource.accept("text/plain")
                 .get(ClientResponse.class);
 
         if (response.getStatus() != 200) {

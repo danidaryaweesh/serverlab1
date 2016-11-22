@@ -1,5 +1,7 @@
 package servlet;
 
+/*package servlet;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +12,10 @@ import java.io.PrintWriter;
 /**
  * Created by dani on 2016-11-21.
  */
-public class Faces extends HttpServlet{
+public class Faces{
+
+}
+/*public class Faces extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
@@ -41,3 +46,4 @@ public class Faces extends HttpServlet{
         super.doDelete(req, resp);
     }
 }
+*/
