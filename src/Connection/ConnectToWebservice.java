@@ -30,7 +30,7 @@ public class ConnectToWebservice {
     public void doPost(String toSend){
         Client client = Client.create();
         WebResource webResource= client.resource("http://130.229.136.250:8080/rest/hello/");
-        ClientResponse response = webResource.accept("text/plain") // kan skickas som jSon
+        ClientResponse response = webResource.accept("text/plain") // kan skickas som jSon --> (application/json)
                 .post(ClientResponse.class, toSend);
 
         if (response.getStatus() != 200) {
