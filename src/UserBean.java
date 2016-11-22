@@ -1,8 +1,12 @@
 import DAO.UserDao;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import controller.LogController;
 import controller.UserController;
 import model.Log;
 import model.User;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.Calendar;
@@ -15,6 +19,7 @@ import java.util.List;
 @ManagedBean(name="userbean", eager = true)
 @SessionScoped
 public class UserBean {
+
     private UserController userController = new UserController();
     private String username;
     private String password;
@@ -81,6 +86,23 @@ public class UserBean {
         }
         else
             return null;
+    }
+
+    public void goConnect(){
+        Client client = Client.create();
+        WebResource webResource= client.resource("http://localhost:8080/hello/get");
+        ClientResponse response = webResource.accept("application/json")
+                .get(ClientResponse.class);
+
+        if (response.getStatus() != 200) {
+            throw new RuntimeException("Failed : HTTP error code : "
+                    + response.getStatus());
+        }
+
+        String output = response.getEntity(String.class);
+
+        System.out.println("Output from Server .... \n");
+        System.out.println(output);
     }
 
     public void doRegister(){
