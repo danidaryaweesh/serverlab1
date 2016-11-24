@@ -1,8 +1,5 @@
 package controller;
 
-import DAO.UserDao;
-import model.User;
-import service.UserService;
 import service.UserServiceImpl;
 
 /**
@@ -15,7 +12,7 @@ public class UserController {
         userService = new UserServiceImpl();
     }//userController
 
-    public User login(User user){
+   /* public User login(User user){
         user = userService.login(user);
         if(user != null)
             return user;
@@ -41,4 +38,5 @@ public class UserController {
         userDao.setId(user.getId());
         return userDao;
     }//create
+    */
 }//class
