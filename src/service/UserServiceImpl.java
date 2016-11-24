@@ -1,13 +1,14 @@
 package service;
 
-import model.User;
-
-import javax.persistence.*;
-import java.util.List;
-
 /**
  * Created by Alican on 2016-11-21.
  */
+
+
+public class UserServiceImpl{
+
+}
+/*
 public class UserServiceImpl implements UserService{
     private EntityManager em;
 
@@ -61,3 +62,4 @@ public class UserServiceImpl implements UserService{
         return userList;
     }
 }//class
+*/

@@ -9,7 +9,7 @@ import service.UserServiceImpl;
  * Created by Alican on 2016-11-21.
  */
 public class UserController {
-    private UserService userService;
+    private UserServiceImpl userService;
 
     public UserController(){
         userService = new UserServiceImpl();

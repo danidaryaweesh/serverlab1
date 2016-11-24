@@ -1,4 +1,7 @@
+import Connection.ConnectToWebservice;
+import DAO.UserAuthentication;
 import DAO.UserDao;
+import com.google.gson.Gson;
 import controller.LogController;
 import controller.UserController;
 import model.Log;
@@ -18,6 +21,7 @@ import java.util.List;
 public class UserBean {
 
     private UserController userController = new UserController();
+    private ConnectToWebservice connectToWebservice = new ConnectToWebservice();
     private String username;
     private String password;
     private int age;
@@ -71,10 +75,22 @@ public class UserBean {
     }
 
     public String doLogin(){
+        Gson gson = new Gson();
         User tmp = new User();
         tmp.setUsername(username);
         tmp.setPassword(password);
-        user = userController.login(tmp);
+
+        String response = connectToWebservice.loginRequest(gson.toJson(tmp));
+        if(response.contains("empty")){
+            System.out.println("Failed to log in!");
+
+            return"login.xhtml";
+        }else{
+            userDao = gson.fromJson(response, UserDao.class);
+            return "index.xhtml";
+        }
+
+        /*user = userController.login(tmp);
         if(user != null){
             setAge(user.getAge());
             setAddress(user.getAddress());
@@ -82,17 +98,28 @@ public class UserBean {
             return "index.xhtml";
         }
         else
-            return null;
+            return null;*/
     }
 
     public void doRegister(){
-        user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setAge(age);
-        user.setAddress(address);
-        user.setWorkTitle(workTitle);
-        userController.register(user);
+        Gson gson = new Gson();
+
+        UserAuthentication userAuthentication = new UserAuthentication();
+        userAuthentication.setUsername(username);
+        userAuthentication.setPassword(password);
+        userAuthentication.setAddress(address);
+        userAuthentication.setAge(age);
+        userAuthentication.setWorkTitle(workTitle);
+
+        String json = gson.toJson(userAuthentication);
+        String response = connectToWebservice.addUser(json);
+
+        if(response.contains("empty")){
+            System.out.println("Failed to register!");
+        }else{
+            userDao = gson.fromJson(response, UserDao.class);
+            System.out.println("Saved user: "+userDao.getUsername());
+        }
     }
 
     public String backToLogin(){
@@ -102,11 +129,6 @@ public class UserBean {
     public String backToRegister(){
         return "register.xhtml";
     }
-
-
-
-
-
 
 
 

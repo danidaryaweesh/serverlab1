@@ -1,17 +1,61 @@
 package Connection;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import org.apache.wink.client.ClientResponse;
+import org.apache.wink.client.Resource;
+import org.apache.wink.client.RestClient;
 
 /**
  * Created by dani on 2016-11-22.
  */
 public class ConnectToWebservice {
 
+    private RestClient restClient;
 
+    public ConnectToWebservice(){
+        restClient = new RestClient();
+    }
+
+    public String loginRequest(String toSend){
+        Resource resource = restClient.resource("http://130.229.136.250:8080/rest/user/login?"+toSend);
+        String string = resource.accept("text/plain").get(String.class);
+
+        return string;
+    }
+
+    public String addUser(String user){
+        Resource resource = restClient.resource("http://130.229.136.250:8080/rest/user?"+user);
+        ClientResponse clientResponse = resource.accept("text/plain").post(String.class);
+        String string = clientResponse.toString();
+
+        return string;
+    }
+
+    public String getCertainUserWithID(int id){
+        Resource resource = restClient.resource("http://130.229.136.250:8080/rest/user/"+id);
+        String string = resource.accept("text/plain").get(String.class);
+
+        return string;
+    }
+
+    public String getCertainUserWithUsername(String username){
+        Resource resource = restClient.resource("http://130.229.136.250:8080/rest/user/"+username);
+        String string = resource.accept("text/plain").get(String.class);
+
+        return string;
+    }
+
+    // måste ändras till post senare!
+    public String addLog(String log){
+        Resource resource = restClient.resource("http://130.229.136.250:8080/rest/user/add?"+log);
+        ClientResponse clientResponse = resource.accept("text/plain").post(String.class);
+
+        return clientResponse.toString();
+    }
+
+/*
+    jersey-client --> not needed right now!
     public void doGet(){
-        Client client = Client.create();
+
         WebResource webResource= client.resource("http://130.229.136.250:8080/rest/hello/");
         ClientResponse response = webResource.accept("text/plain")
                 .get(ClientResponse.class);
@@ -42,5 +86,12 @@ public class ConnectToWebservice {
 
         System.out.println("Output from Server .... \n");
         System.out.println(output);
-    }
+    }*/
+
+   /* public void test(){
+        RestClient client = new RestClient();
+        Resource resource = client.resource("http://130.229.136.250:8080/rest/hello/");
+        String string = resource.accept("text/plain").get(String.class);
+        resource.g
+    }*/
 }
