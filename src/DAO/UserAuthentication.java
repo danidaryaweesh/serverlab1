@@ -6,16 +6,17 @@ import java.util.List;
  * Created by dani on 2016-11-24.
  */
 public class UserAuthentication {
-    private int id;
+    //private int id;
     private String username;
     private String password;
+    /*
     private List<LogDao> log;
     private List<MessageDao> senderMessage;
     private List<MessageDao> recieverMessage;
     private int age;
     private String address;
-    private String workTitle;
-
+    private String workTitle;*/
+/*
     public int getId() {
         return id;
     }
@@ -23,7 +24,7 @@ public class UserAuthentication {
     public void setId(int id) {
         this.id = id;
     }
-
+*/
     public String getUsername() {
         return username;
     }
@@ -39,7 +40,7 @@ public class UserAuthentication {
     public void setPassword(String password) {
         this.password = password;
     }
-
+/*
     public List<LogDao> getLog() {
         return log;
     }
@@ -86,5 +87,5 @@ public class UserAuthentication {
 
     public void setWorkTitle(String workTitle) {
         this.workTitle = workTitle;
-    }
+    }*/
 }

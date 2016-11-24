@@ -76,9 +76,10 @@ public class UserBean {
 
     public String doLogin(){
         Gson gson = new Gson();
-        User tmp = new User();
+        UserAuthentication tmp = new UserAuthentication();
         tmp.setUsername(username);
         tmp.setPassword(password);
+
 
         String response = connectToWebservice.loginRequest(gson.toJson(tmp));
         if(response.contains("empty")){
@@ -87,6 +88,9 @@ public class UserBean {
             return"login.xhtml";
         }else{
             userDao = gson.fromJson(response, UserDao.class);
+            setAge(userDao.getAge());
+            setAddress(userDao.getAddress());
+            setWorkTitle(userDao.getWorkTitle());
             return "index.xhtml";
         }
 
@@ -107,9 +111,9 @@ public class UserBean {
         UserAuthentication userAuthentication = new UserAuthentication();
         userAuthentication.setUsername(username);
         userAuthentication.setPassword(password);
-        userAuthentication.setAddress(address);
-        userAuthentication.setAge(age);
-        userAuthentication.setWorkTitle(workTitle);
+        //userAuthentication.setAddress(address);
+        //userAuthentication.setAge(age);
+        //userAuthentication.setWorkTitle(workTitle);
 
         String json = gson.toJson(userAuthentication);
         String response = connectToWebservice.addUser(json);
