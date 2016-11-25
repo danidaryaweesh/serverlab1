@@ -110,8 +110,7 @@ public class UserBean {
         if(response.contains("Empty")){
             System.out.println("Failed to register!");
         }else{
-            userDao = gson.fromJson(response, UserDao.class);
-            System.out.println("Saved user: "+userDao.getUsername());
+            System.out.println("Saved user: "+response);
         }
     }
 

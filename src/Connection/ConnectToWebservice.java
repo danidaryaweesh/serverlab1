@@ -36,20 +36,13 @@ public class ConnectToWebservice {
     public String addUser(String user){
 
         System.out.println(user);
-        String url = "";
-        String string="";
-        ClientResponse clientResponse=null;
-        try {
-            url = "http://130.229.133.219:8080/rest/user?" + URLEncoder.encode(user, "UTF-8");
-            Resource resource = restClient.resource(url);
-            clientResponse = resource.accept("text/plain").post(String.class);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        if(clientResponse != null)
-            return clientResponse.toString();
-        else
-            return "Empty";
+
+        String url = "http://130.229.133.219:8080/rest/user";// + URLEncoder.encode(user, "UTF-8");
+        Resource resource = restClient.resource(url);
+
+        String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, user);
+
+        return string;
     }
 
     public String getCertainUserWithID(int id){
