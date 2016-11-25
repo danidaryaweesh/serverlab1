@@ -1,6 +1,5 @@
 package Connection;
 
-import org.apache.wink.client.ClientResponse;
 import org.apache.wink.client.Resource;
 import org.apache.wink.client.RestClient;
 
@@ -37,11 +36,10 @@ public class ConnectToWebservice {
 
         System.out.println(user);
 
-        String url = "http://130.229.133.219:8080/rest/user";// + URLEncoder.encode(user, "UTF-8");
+        String url = "http://130.229.133.219:8080/rest/user";
         Resource resource = restClient.resource(url);
 
         String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, user);
-
         return string;
     }
 
@@ -60,37 +58,19 @@ public class ConnectToWebservice {
 
 
     public String addLog(String log){
-        String url = "";
-        String string="";
-        ClientResponse clientResponse=null;
-        try {
-            url = "http://130.229.133.219:8080/rest/user/add?" + URLEncoder.encode(log, "UTF-8");
-            Resource resource = restClient.resource(url);
-            clientResponse = resource.accept("text/plain").post(String.class);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        if(clientResponse != null)
-            return clientResponse.toString();
-        else
-            return "Empty";
+        String url = "http://130.229.133.219:8080/rest/user/add";
+        Resource resource = restClient.resource(url);
+
+        String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, log);
+        return string;
     }
 
     public String addMessage(String message){
-        String url = "";
-        String string="";
-        ClientResponse clientResponse=null;
-        try {
-            url = "http://130.229.133.219:8080/rest/message?" + URLEncoder.encode(message, "UTF-8");
-            Resource resource = restClient.resource(url);
-            clientResponse = resource.accept("text/plain").post(String.class);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
-        if(clientResponse != null)
-            return clientResponse.toString();
-        else
-            return "Empty";
+        String url = "http://130.229.133.219:8080/rest/message";
+        Resource resource = restClient.resource(url);
+        String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, message);
+
+        return string;
     }
 }

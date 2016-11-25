@@ -1,16 +1,13 @@
 import Connection.ConnectToWebservice;
+import DAO.LogDao;
+import DAO.MessageDao;
 import DAO.UserAuthentication;
 import DAO.UserDao;
 import com.google.gson.Gson;
-import controller.LogController;
-import controller.UserController;
-import model.Log;
-import model.User;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by dani on 2016-11-18.
@@ -20,7 +17,6 @@ import java.util.List;
 @SessionScoped
 public class UserBean {
 
-    private UserController userController = new UserController();
     private ConnectToWebservice connectToWebservice = new ConnectToWebservice();
     private String username;
     private String password;
@@ -28,7 +24,14 @@ public class UserBean {
     private String address;
     private String workTitle;
     private UserDao userDao;
-    private User user;
+
+    private LogDao logDao;
+    private String title;
+    private String content;
+
+    private MessageDao messageDao;
+    private String reciever;
+    private String messageContent;
 
     public int getAge() {
         return age;
@@ -70,9 +73,21 @@ public class UserBean {
         this.password = password;
     }
 
-    public String getMessage(){
-        return "hello";
-    }
+    public String getTitle() { return title; }
+
+    public void setTitle(String title) { this.title = title; }
+
+    public String getContent() { return content; }
+
+    public void setContent(String content) { this.content = content; }
+
+    public String getReciever() { return reciever; }
+
+    public void setReciever(String reciever) { this.reciever = reciever; }
+
+    public String getMessageContent() { return messageContent; }
+
+    public void setMessageContent(String messageContent) { this.messageContent = messageContent; }
 
     public String doLogin(){
         Gson gson = new Gson();
@@ -96,7 +111,6 @@ public class UserBean {
 
     public void doRegister(){
         Gson gson = new Gson();
-
         UserAuthentication userAuthentication = new UserAuthentication();
         userAuthentication.setUsername(username);
         userAuthentication.setPassword(password);
@@ -122,51 +136,46 @@ public class UserBean {
         return "register.xhtml";
     }
 
-
-
-    private LogController logController = new LogController();
-    private String title;
-    private String content;
-    private Calendar date = Calendar.getInstance();
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Calendar getDate() {
-        return date;
-    }
-
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
     public void addLog(){
-        if(title != null && content != null){
-            Log log = new Log();
-            log.setOwner(user);
-            System.out.println("the index username is: " + user.getUsername());
-            log.setTitle(title);
-            log.setContent(content);
-            log.setDate(Calendar.getInstance());
-            logController.addLog(log);
+        if(title.length() > 0 && content.length() > 0){
+            logDao = new LogDao();
+            logDao.setOwner(userDao);
+            logDao.setContent(content);
+            logDao.setTitle(title);
+            logDao.setDate(Calendar.getInstance());
+
+            Gson gson = new Gson();
+            String logGson = gson.toJson(logDao, LogDao.class);
+            String response = connectToWebservice.addLog(logGson);
+            if(response.contains("Empty")){
+                System.out.println("Failed to add the log!");
+            }else{
+                content="";
+                title="";
+                System.out.println("Added the log");
+            }
         }//if
     }//addLog
 
-    public String getLogs(){
-        List<Log> logList = user.getLog();
-        return logList.toString();
+    public void addMessage(){
+        if(reciever.length() > 0 && content.length() > 0){
+            messageDao = new MessageDao();
+            messageDao.setSender(userDao);
+            messageDao.setReciever(reciever);
+            messageDao.setContent(messageContent);
+            messageDao.setDate(Calendar.getInstance());
+
+            Gson gson = new Gson();
+            String messageGson = gson.toJson(messageDao, MessageDao.class);
+            String response = connectToWebservice.addMessage(messageGson);
+
+            if(response.contains("Empty")){
+                System.out.println("Failed to register the message!");
+            }else{
+                reciever="";
+                messageContent="";
+                System.out.println("Added the message!");
+            }
+        }
     }
 }//class
