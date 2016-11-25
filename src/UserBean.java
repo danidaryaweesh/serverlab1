@@ -105,7 +105,7 @@ public class UserBean {
             setAge(userDao.getAge());
             setAddress(userDao.getAddress());
             setWorkTitle(userDao.getWorkTitle());
-            return "index.xhtml";
+            return "default.xhtml"; //"index.xhtml";
         }
     }
 
@@ -137,16 +137,21 @@ public class UserBean {
     }
 
     public void addLog(){
+        System.out.println("Before if");
         if(title.length() > 0 && content.length() > 0){
+            System.out.println("After if");
             logDao = new LogDao();
             logDao.setOwner(userDao);
             logDao.setContent(content);
             logDao.setTitle(title);
             logDao.setDate(Calendar.getInstance());
+            System.out.println(logDao.getOwner().getUsername() + " " + logDao.getTitle() + " " + logDao.getContent());
 
             Gson gson = new Gson();
             String logGson = gson.toJson(logDao, LogDao.class);
+            System.out.println(" loggson: " + logGson);
             String response = connectToWebservice.addLog(logGson);
+            System.out.println("Response " + response);
             if(response.contains("Empty")){
                 System.out.println("Failed to add the log!");
             }else{

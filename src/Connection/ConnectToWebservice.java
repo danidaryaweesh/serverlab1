@@ -58,7 +58,7 @@ public class ConnectToWebservice {
 
 
     public String addLog(String log){
-        String url = "http://130.229.133.219:8080/rest/user/add";
+        String url = "http://130.229.133.219:8080/rest/log";
         Resource resource = restClient.resource(url);
 
         String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, log);

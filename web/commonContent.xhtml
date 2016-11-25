@@ -2,12 +2,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
 >
 <body>
 <ui:composition>
 
-    This is default content
+    <f:view>
+        <h:form id="helloform">
+            <h2>My Profile</h2>
+            <h:outputLabel id="username" value="#{userbean.getUsername()}, "/>
+            <h:outputLabel id="age" value="#{userbean.getAge()}"/><br/>
+            <h:outputLabel id="address" value="#{userbean.getAddress()}"/><br/>
+            <h:outputLabel id="worktitle" value="#{userbean.getWorkTitle()}"/><br/><br/>
+        </h:form>
+
+        <h:form>
+            <h:dataTable value="My Logs" var="logitem">
+                <h:column>Title<h:inputText value="#{userbean.title}" /></h:column><br/>
+                <h:column>Content<h:inputText value="#{userbean.content}" /></h:column><br/>
+            </h:dataTable>
+            <h:commandButton value="Add Log" action="#{userbean.addLog()}"/>
+        </h:form>
+
+
+
+    </f:view>
 
 </ui:composition>
 </body>
