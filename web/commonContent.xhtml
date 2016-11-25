@@ -22,13 +22,29 @@
                 <h:column>Title<h:inputText value="#{userbean.title}" /></h:column><br/>
                 <h:column>Content<h:inputText value="#{userbean.content}" /></h:column><br/>
             </h:dataTable>
-            <h:commandButton value="Add Log" action="#{userbean.addLog()}"/>
+            <h:commandButton value="Add Log" action="#{userbean.addLog()}">
+                <f:ajax execute="@form" render="logtable"/>
+            </h:commandButton>
+
+        <h:dataTable id="logtable" value="#{userbean.list}" var="listitem">
+            <h:column>
+                <h:link value="#{listitem.owner.username}" outcome="listitem">
+                    <f:param name="username" value="#{listitem.owner.username}" />
+                </h:link>
+                <p>
+                    Title:<h:link value="#{listitem.title}" outcome="listitem">
+                    <f:param name="title" value="#{listitem.title}" />
+                </h:link>
+                </p>
+                <p>
+                    Content:<h:link value="#{listitem.content}" outcome="listitem">
+                    <f:param name="content" value="#{listitem.content}" />
+                </h:link>
+                </p>
+            </h:column>
+        </h:dataTable>
         </h:form>
-
-
-
     </f:view>
-
 </ui:composition>
 </body>
 </html>

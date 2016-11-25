@@ -7,7 +7,10 @@ import com.google.gson.Gson;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by dani on 2016-11-18.
@@ -32,6 +35,21 @@ public class UserBean {
     private MessageDao messageDao;
     private String reciever;
     private String messageContent;
+
+    private String searchName;
+    private List<LogDao> list = new ArrayList<>();
+
+    public List<LogDao> getList() {
+        return list;
+    }
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
     public int getAge() {
         return age;
@@ -105,6 +123,7 @@ public class UserBean {
             setAge(userDao.getAge());
             setAddress(userDao.getAddress());
             setWorkTitle(userDao.getWorkTitle());
+            list = userDao.getLog();
             return "default.xhtml"; //"index.xhtml";
         }
     }
@@ -158,6 +177,7 @@ public class UserBean {
                 content="";
                 title="";
                 System.out.println("Added the log");
+                list.add(logDao);
             }
         }//if
     }//addLog
