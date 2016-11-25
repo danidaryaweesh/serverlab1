@@ -81,7 +81,7 @@ public class UserBean {
         tmp.setPassword(password);
 
         String response = connectToWebservice.loginRequest(gson.toJson(tmp));
-        if(response.contains("empty")){
+        if(response.contains("Empty")){
             System.out.println("Failed to log in!");
 
             return"login.xhtml";
@@ -107,7 +107,7 @@ public class UserBean {
         String json = gson.toJson(userAuthentication);
         String response = connectToWebservice.addUser(json);
 
-        if(response.contains("empty")){
+        if(response.contains("Empty")){
             System.out.println("Failed to register!");
         }else{
             userDao = gson.fromJson(response, UserDao.class);
