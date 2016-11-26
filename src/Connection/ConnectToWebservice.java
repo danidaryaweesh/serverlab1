@@ -73,4 +73,12 @@ public class ConnectToWebservice {
 
         return string;
     }
+
+    public String getRecievedMessages(String username){
+        String url= "http://130.229.172.96:8080/rest/message/"+username;
+        Resource resource = restClient.resource(url);
+        String response = resource.accept("text/plain").get(String.class);
+
+        return response;
+    }
 }
