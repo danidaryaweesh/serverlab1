@@ -4,9 +4,12 @@ import DAO.MessageDao;
 import DAO.UserAuthentication;
 import DAO.UserDao;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -216,4 +219,66 @@ public class UserBean {
             }
         }
     }
+
+    public String viewMessages(){
+        System.out.println("view messages");
+        String string = connectToWebservice.getRecievedMessages(userDao.getUsername());
+        System.out.println("after connect");
+
+        if(!string.contains("Empty")){
+            Gson gson = new Gson();
+            msglist = gson.fromJson(string, new TypeToken<List<MessageDao>>(){}.getType());
+            System.out.println("after fromJson");
+        }
+        else{
+            System.out.println("It's empty");
+        }
+        return "message.xhtml";
+    }
+
+    public String doLogout(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "login.xhtml";
+    }
+
+    public void loadProfile(){
+        if(searchName != null && !searchName.isEmpty()){
+            Gson gson = new Gson();
+            String string = connectToWebservice.getCertainUserWithUsername(searchName);
+            if(!string.contains("Empty")){
+                UserDao userDao = gson.fromJson(string, UserDao.class);
+                username = userDao.getUsername();
+                workTitle = userDao.getWorkTitle();
+                age = userDao.getAge();
+                address = userDao.getAddress();
+                list = userDao.getLog();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("foreignProfile.xhtml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                System.out.println("It's empty!");
+            }//else
+        }//if
+    }//load
+
+    public String loadMyProfile(){
+        Gson gson = new Gson();
+        String string = connectToWebservice.getCertainUserWithID(userDao.getId());
+        if(!string.contains("Empty")){
+            UserDao userDao = gson.fromJson(string, UserDao.class);
+            username = userDao.getUsername();
+            workTitle = userDao.getWorkTitle();
+            age = userDao.getAge();
+            address = userDao.getAddress();
+            list = userDao.getLog();
+            return "default.xhtml";
+        }
+        else{
+            System.out.println("It's empty!");
+        }//else
+        return "default.xhtml";
+    }//myProfile
 }//class

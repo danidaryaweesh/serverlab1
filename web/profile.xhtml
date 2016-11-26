@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<body>
+<ui:composition>
+    <f:view>
+        <h:form id="helloform">
+            <h2>My Profile</h2>
+            <h:outputLabel id="username" value="#{userbean.getUsername()}, "/>
+            <h:outputLabel id="age" value="#{userbean.getAge()}"/><br/>
+            <h:outputLabel id="address" value="#{userbean.getAddress()}"/><br/>
+            <h:outputLabel id="worktitle" value="#{userbean.getWorkTitle()}"/><br/><br/>
+        </h:form>
+
+        <h:form>
+            <h:dataTable id="logtable" value="#{userbean.list}" var="listitem">
+                <h:column>
+                    <h:link value="#{listitem.owner.username}" outcome="listitem">
+                        <f:param name="username" value="#{listitem.owner.username}" />
+                    </h:link>
+                    <p>
+                        Title:<h:link value="#{listitem.title}" outcome="listitem">
+                        <f:param name="title" value="#{listitem.title}" />
+                    </h:link>
+                    </p>
+                    <p>
+                        Content:<h:link value="#{listitem.content}" outcome="listitem">
+                        <f:param name="content" value="#{listitem.content}" />
+                    </h:link>
+                    </p>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </f:view>
+</ui:composition>
+</body>
+</html>

@@ -7,10 +7,14 @@
 <body>
 <ui:composition>
     <f:view>
-        <b>Danibook         </b>
-        <h:button value="My Profile" outcome="default.xhtml"/>
-        <h:button value="Messages" outcome="message.xhtml"/>
-        Search<h:inputText value="#{userbean.searchName}"/>
+        <h:form>
+            <b>Danibook         </b>
+            <h:commandButton value="My Profile" action="#{userbean.loadMyProfile()}"/>
+            <h:commandButton value="Messages" action="#{userbean.viewMessages()}"/>
+            Search<h:inputText value="#{userbean.searchName}"/>
+            <h:commandButton value="Search" action="#{userbean.loadProfile()}"/>
+            <h:commandButton value="Log Out" action="#{userbean.doLogout()}"/>
+        </h:form>
     </f:view>
 </ui:composition>
 </body>
