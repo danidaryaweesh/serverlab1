@@ -22,7 +22,7 @@ public class ConnectToWebservice {
         String url = "";
         String string="";
         try {
-            url = "http://130.229.133.219:8080/rest/user/login?userDaoJson=" + URLEncoder.encode(toSend, "UTF-8");
+            url = "http://130.229.172.96:8080/rest/user/login?userDaoJson=" + URLEncoder.encode(toSend, "UTF-8");
             Resource resource = restClient.resource(url);
             string = resource.accept("text/plain").get(String.class);
         } catch (UnsupportedEncodingException e) {
@@ -36,7 +36,7 @@ public class ConnectToWebservice {
 
         System.out.println(user);
 
-        String url = "http://130.229.133.219:8080/rest/user";
+        String url = "http://130.229.172.96:8080/rest/user";
         Resource resource = restClient.resource(url);
 
         String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, user);
@@ -44,21 +44,21 @@ public class ConnectToWebservice {
     }
 
     public String getCertainUserWithID(int id){
-        Resource resource = restClient.resource("http://130.229.133.219:8080/rest/user/"+id);
+        Resource resource = restClient.resource("http://130.229.172.96:8080/rest/user/"+id);
         String string = resource.accept("text/plain").get(String.class);
 
         return string;
     }
 
     public String getCertainUserWithUsername(String username){
-        Resource resource = restClient.resource("http://130.229.133.219:8080/rest/user/username/"+username);
+        Resource resource = restClient.resource("http://130.229.172.96:8080/rest/user/username/"+username);
         String string = resource.accept("text/plain").get(String.class);
         return string;
     }
 
 
     public String addLog(String log){
-        String url = "http://130.229.133.219:8080/rest/log";
+        String url = "http://130.229.172.96:8080/rest/log";
         Resource resource = restClient.resource(url);
 
         String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, log);
@@ -67,7 +67,7 @@ public class ConnectToWebservice {
 
     public String addMessage(String message){
 
-        String url = "http://130.229.133.219:8080/rest/message";
+        String url = "http://130.229.172.96:8080/rest/message";
         Resource resource = restClient.resource(url);
         String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, message);
 
