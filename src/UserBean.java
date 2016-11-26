@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -116,7 +115,6 @@ public class UserBean {
         String response = connectToWebservice.loginRequest(gson.toJson(tmp));
         if(response.contains("Empty")){
             System.out.println("Failed to log in!");
-
             return"login.xhtml";
         }else{
             userDao = gson.fromJson(response, UserDao.class);
@@ -148,11 +146,20 @@ public class UserBean {
     }
 
     public String backToLogin(){
+        clearFields();
         return "login.xhtml";
     }
 
     public String backToRegister(){
+        clearFields();
         return "register.xhtml";
+    }
+
+    private void clearFields(){
+        username="";
+        password="";
+        address="";
+        workTitle="";
     }
 
     public void addLog(){
