@@ -66,9 +66,9 @@ public class ConnectToWebservice {
     }
 
     public String addMessage(String message){
-
         String url = "http://130.229.172.96:8080/rest/message";
         Resource resource = restClient.resource(url);
+
         String string = resource.header("Content-Type", "text/plain").accept("text/plain").post(String.class, message);
 
         return string;

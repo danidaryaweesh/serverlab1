@@ -37,6 +37,11 @@ public class UserBean {
 
     private String searchName;
     private List<LogDao> list = new ArrayList<>();
+    private List<MessageDao> msglist = new ArrayList<>();
+
+    public List<MessageDao> getMsglist(){
+        return msglist;
+    }
 
     public List<LogDao> getList() {
         return list;
@@ -190,7 +195,8 @@ public class UserBean {
     }//addLog
 
     public void addMessage(){
-        if(reciever.length() > 0 && content.length() > 0){
+        System.out.println(reciever + " " + messageContent);
+        if(reciever.length() > 0 && messageContent.length() > 0){
             messageDao = new MessageDao();
             messageDao.setSender(userDao);
             messageDao.setReciever(reciever);

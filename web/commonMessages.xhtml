@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h2>Send Messages</h2>
+    <h:form>
+        <h:dataTable value="My Messages" var="messageItem">
+            <h:column>Receiver<h:inputText value="#{userbean.reciever}"/></h:column><br/><br/>
+            <h:column>Content<h:inputText value="#{userbean.messageContent}"/></h:column><br/><br/>
+        </h:dataTable>
+        <h:commandButton value="Send" action="#{userbean.addMessage()}"/>
+    </h:form>
+
+    <h2>View Messages</h2>
+    <h:form>
+        <h:dataTable id="msgtable" value="#{userbean.msglist}" var="msgitem">
+            <h:column>
+                    Sender:<h:link value="#{msgitem.sender.username}" outcome="msgitem">
+                    <f:param name="username" value="#{msgitem.sender.username}" />
+                    </h:link>
+                <p>
+                    Content:<h:link value="#{msgitem.content}" outcome="msgitem">
+                    <f:param name="content" value="#{msgitem.content}" />
+                    </h:link>
+                </p>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+</f:view>
+</html>
